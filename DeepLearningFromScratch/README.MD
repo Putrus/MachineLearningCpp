@@ -1,0 +1,1 @@
+# Code snippets created during reading "Deep Learning from Scratch" by Seth Weidman
