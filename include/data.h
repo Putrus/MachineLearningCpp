@@ -23,9 +23,10 @@ public:
     const std::vector<uint8_t>* getFeatureVector() const;
 
 private:
-    std::vector<uint8_t>* featureVector;
+    std::vector<uint8_t>* feature_vector;
     uint8_t label;
-    int enumLabel;
+    int enum_label;
+    double distance;
 };
 
 #endif

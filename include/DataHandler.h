@@ -30,14 +30,14 @@ public:
     std::vector<Data*>* getValidationData();
 
 private:
-    std::vector<Data*>* dataArray; //all of the data (pre-split)
-    std::vector<Data*>* trainingData;
-    std::vector<Data*>* testData;
-    std::vector<Data*>* validationData;
+    std::vector<Data*>* data_array; //all of the data (pre-split)
+    std::vector<Data*>* training_data;
+    std::vector<Data*>* test_data;
+    std::vector<Data*>* validation_data;
 
-    int numClasses;
-    int featureVectorSize;
-    std::map<uint8_t, int> classMap;
+    int num_classes;
+    int feature_vector_size;
+    std::map<uint8_t, int> class_map;
 };  
 
 #endif
