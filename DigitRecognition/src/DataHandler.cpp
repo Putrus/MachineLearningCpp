@@ -151,7 +151,7 @@ uint32_t DataHandler::convertToLittleEndian(const unsigned char* bytes)
     }
 
     return (uint32_t) ((bytes[0] << 24) |
-        (bytes[1] << 16) | (bytes[2 << 8]) | bytes[3]);
+        (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]);
 }
 
 std::vector<Data*>* DataHandler::getTrainingData()
