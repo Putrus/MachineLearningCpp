@@ -1,5 +1,9 @@
 #include "..\include\DataHandler.h"
 
+constexpr unsigned int IMAGE_HEADERS = 4;
+constexpr unsigned int LABEL_HEADERS = 2;
+constexpr unsigned int BYTES_OFFSET = 4;
+
 DataHandler::DataHandler()
 {
     data_array = new std::vector<Data*>;
@@ -26,26 +30,84 @@ DataHandler::~DataHandler()
 
 void DataHandler::readFeatureVector(const std::string& path)
 {
-    uint32_t header[4]; //magic, num images, row size, col size
-    unsigned char bytes[4];
-
     FILE* file = fopen(path.c_str(), "r");
-    if (file)
+    if(file)
     {
-        for (int i = 0; i < 4; ++i)
+        uint32_t header[IMAGE_HEADERS]; //magic, num images, row size, col size
+        unsigned char bytes[BYTES_OFFSET];
+        for(int i = 0; i < IMAGE_HEADERS; ++i)
         {
             if (fread(bytes, sizeof(bytes), 1, file))
             {
                 header[i] = convertToLittleEndian(bytes);
             }
-            std::cout << "Getting input file header is done." << std::endl; 
         }
+        std::cout << "Getting input file header is done." << std::endl;
+
+        int image_size = header[2] * header[3];
+        for(int i = 0; i < header[1]; ++i)
+        {
+            Data* data = new Data();
+            uint8_t element;
+            for(int j = 0; j < image_size; ++j)
+            {
+                if(fread(&element, sizeof(element), 1, file))
+                {
+                    data->appendToFeatureVector(element);
+                }
+                else
+                {
+                    std::cout << "Error reading from file." << std::endl;
+                    exit(1);
+                }
+            }
+            data_array->push_back(data);
+        }
+        std::cout << "Successfully read and stored " << data_array->size() << " feature vectors." << std::endl;
+    }
+    else
+    {
+        std::cout << "Could not find the file " << path << std::endl;
+        exit(1);
     }
 }
 
 void DataHandler::readFeatureLabels(const std::string& path)
 {
+    uint32_t header[LABEL_HEADERS]; //magic number, images
+    unsigned char bytes[BYTES_OFFSET];
 
+    FILE* file = fopen(path.c_str(), "r");
+    if(file)
+    {
+        for(int i = 0; i < LABEL_HEADERS; ++i)
+        {
+            if(fread(bytes, sizeof(bytes), 1, file))
+            {
+                header[i] = convertToLittleEndian(bytes);
+            }
+        }
+        std::cout << "Getting label file header is done." << std::endl;
+        for(int i = 0; i < header[1]; ++i)
+        {
+            uint8_t element;
+            if(fread(&element, sizeof(element), 1, file))
+            {
+                data_array->at(i)->setLabel(element);
+            }
+            else
+            {
+                std::cout << "Error reading from file " << path << std::endl;
+                exit(1);
+            }
+        }
+        std::cout << "Succesfully read and stored " << data_array->size() << " label vector." << std::endl;
+    }
+    else
+    {
+        std::cout << "Could not find the file " << path << std::endl;
+        exit(1);
+    }
 }
 
 void DataHandler::splitData()
