@@ -30,6 +30,8 @@ public:
     std::vector<Data*>* getValidationData();
 
 private:
+    void fillRandomly(std::unordered_set<int>& used_indexes, std::vector<Data*>* data, int size);
+
     std::vector<Data*>* data_array; //all of the data (pre-split)
     std::vector<Data*>* training_data;
     std::vector<Data*>* test_data;

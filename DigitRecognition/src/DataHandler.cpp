@@ -112,12 +112,35 @@ void DataHandler::readFeatureLabels(const std::string& path)
 
 void DataHandler::splitData()
 {
+    std::unordered_set<int> used_indexes;
 
+    int train_size = data_array->size() * TRAIN_SET_PERCENT;
+    fillRandomly(used_indexes, training_data, train_size);
+    std::cout << "Training data size: " << training_data->size() << std::endl;
+
+    int test_size = data_array->size() * TEST_SET_PERCENT;
+    fillRandomly(used_indexes, test_data, test_size);
+    std::cout << "Test data size: " << training_data->size() << std::endl;
+
+    int validation_size = data_array->size() * VALIDATION_SET_PERCENT;
+    fillRandomly(used_indexes, validation_data, validation_size);
+    std::cout << "Validation data size: " << training_data->size() << std::endl;
 }
 
 void DataHandler::countClasses()
 {
-
+    int count = 0;
+    for(unsigned i = 0; i < data_array->size(); ++i)
+    {
+        if(class_map.find(data_array->at(i)->getLabel()) == class_map.end())
+        {
+            class_map[data_array->at(i)->getLabel()] = count;
+            data_array->at(i)->setEnumeratedLabel(count);
+            ++count;
+        }
+    }
+    num_classes = count;
+    std::cout << "Successfully extracted " << num_classes << " unique classes." << std::endl;
 }
 
 uint32_t DataHandler::convertToLittleEndian(const unsigned char* bytes)
@@ -144,4 +167,17 @@ std::vector<Data*>* DataHandler::getTestData()
 std::vector<Data*>* DataHandler::getValidationData()
 {
 
+}
+
+void DataHandler::fillRandomly(std::unordered_set<int>& used_indexes, std::vector<Data*>* data, int size)
+{
+    while(data->size() < size)
+    {
+        int rand_index = rand() % data_array->size();
+        if(used_indexes.find(rand_index) == used_indexes.end())
+        {
+            data->push_back(data_array->at(rand_index));
+            used_indexes.insert(rand_index);
+        }
+    }
 }
