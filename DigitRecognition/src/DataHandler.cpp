@@ -1,4 +1,4 @@
-#include "..\include\DataHandler.h"
+#include "../include/DataHandler.h"
 
 constexpr unsigned int IMAGE_HEADERS = 4;
 constexpr unsigned int LABEL_HEADERS = 2;
@@ -30,7 +30,7 @@ DataHandler::~DataHandler()
 
 void DataHandler::readFeatureVector(const std::string& path)
 {
-    FILE* file = fopen(path.c_str(), "r");
+    FILE* file = fopen(path.c_str(), "rb");
     if(file)
     {
         uint32_t header[IMAGE_HEADERS]; //magic, num images, row size, col size
@@ -46,7 +46,7 @@ void DataHandler::readFeatureVector(const std::string& path)
 
         int image_size = header[2] * header[3];
         for(int i = 0; i < header[1]; ++i)
-        {
+        { 
             Data* data = new Data();
             uint8_t element;
             for(int j = 0; j < image_size; ++j)
@@ -57,7 +57,7 @@ void DataHandler::readFeatureVector(const std::string& path)
                 }
                 else
                 {
-                    std::cout << "Error reading from file." << std::endl;
+                    std::cout << "Error reading from file " << path << std::endl;
                     exit(1);
                 }
             }
@@ -77,7 +77,7 @@ void DataHandler::readFeatureLabels(const std::string& path)
     uint32_t header[LABEL_HEADERS]; //magic number, images
     unsigned char bytes[BYTES_OFFSET];
 
-    FILE* file = fopen(path.c_str(), "r");
+    FILE* file = fopen(path.c_str(), "rb");
     if(file)
     {
         for(int i = 0; i < LABEL_HEADERS; ++i)
@@ -120,11 +120,11 @@ void DataHandler::splitData()
 
     int test_size = data_array->size() * TEST_SET_PERCENT;
     fillRandomly(used_indexes, test_data, test_size);
-    std::cout << "Test data size: " << training_data->size() << std::endl;
+    std::cout << "Test data size: " << test_data->size() << std::endl;
 
     int validation_size = data_array->size() * VALIDATION_SET_PERCENT;
     fillRandomly(used_indexes, validation_data, validation_size);
-    std::cout << "Validation data size: " << training_data->size() << std::endl;
+    std::cout << "Validation data size: " << validation_data->size() << std::endl;
 }
 
 void DataHandler::countClasses()
@@ -156,17 +156,17 @@ uint32_t DataHandler::convertToLittleEndian(const unsigned char* bytes)
 
 std::vector<Data*>* DataHandler::getTrainingData()
 {
-
+    return training_data;
 }
 
 std::vector<Data*>* DataHandler::getTestData()
 {
-
+    return test_data;
 }
 
 std::vector<Data*>* DataHandler::getValidationData()
 {
-
+    return validation_data;
 }
 
 void DataHandler::fillRandomly(std::unordered_set<int>& used_indexes, std::vector<Data*>* data, int size)

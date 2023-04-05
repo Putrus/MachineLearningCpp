@@ -1,22 +1,22 @@
-#include "..\include\Data.h"
+#include "../include/Data.h"
 
 Data::Data()
 {
     feature_vector = new std::vector<uint8_t>();
 }
 
-~Data::Data()
+Data::~Data()
 {
     delete feature_vector;
 }
 
-void Data::setFeatureVector(std::vector<uint8_t>* v);
+void Data::setFeatureVector(std::vector<uint8_t>* v)
 {
     delete feature_vector;
     feature_vector = v;
 }
 
-void Data::appendToFeatureVector(uint8_t val);
+void Data::appendToFeatureVector(uint8_t val)
 {
    feature_vector->push_back(val); 
 }
