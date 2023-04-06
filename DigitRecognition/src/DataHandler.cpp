@@ -1,5 +1,7 @@
 #include "../include/DataHandler.h"
 
+#include <random>
+
 constexpr unsigned int IMAGE_HEADERS = 4;
 constexpr unsigned int LABEL_HEADERS = 2;
 constexpr unsigned int BYTES_OFFSET = 4;
@@ -113,6 +115,7 @@ void DataHandler::readFeatureLabels(const std::string& path)
 void DataHandler::splitData()
 {
     std::unordered_set<int> used_indexes;
+    used_indexes.reserve(data_array->size());
 
     int train_size = data_array->size() * TRAIN_SET_PERCENT;
     fillRandomly(used_indexes, training_data, train_size);
@@ -171,9 +174,14 @@ std::vector<Data*>* DataHandler::getValidationData()
 
 void DataHandler::fillRandomly(std::unordered_set<int>& used_indexes, std::vector<Data*>* data, int size)
 {
+    data->reserve(size);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 59999);
+
     while(data->size() < size)
     {
-        int rand_index = rand() % data_array->size();
+        int rand_index = dis(gen);
         if(used_indexes.find(rand_index) == used_indexes.end())
         {
             data->push_back(data_array->at(rand_index));
