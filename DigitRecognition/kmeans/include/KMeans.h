@@ -9,7 +9,7 @@
 #include <cmath>
 #include <map>
 
-typedef struct Cluster
+struct Cluster
 {
     Cluster(Data* initial_point)
     {
@@ -23,6 +23,22 @@ typedef struct Cluster
         cluster_points->push_back(initial_point);
         class_counts[initial_point->getLabel()];
         most_frequent_class = initial_point->getLabel();
+    }
+
+    void setMostFrequentClass()
+    {
+        int best_class = -1;
+        int freq = 0;
+        //kv - key value
+        for(const auto& kv : class_counts)
+        {
+            if(kv.second > freq)
+            {
+                freq = kv.second;
+                best_class = kv.first;
+            }
+        }
+        most_frequent_class = best_class;
     }
 
     void addToCluster(Data* point)
@@ -46,22 +62,7 @@ typedef struct Cluster
         {
             ++class_counts[point->getLabel()];
         }
-    }
-
-    void setMostFrequentClass()
-    {
-        int best_class = -1;
-        int freq = 0;
-        //kv - key value
-        for(const auto& kv : class_counts)
-        {
-            if(kv.second > freq)
-            {
-                freq = kv.second;
-                best_class = kv.first;
-            }
-        }
-        most_frequent_class = best_class;
+        setMostFrequentClass();
     }
 
     std::vector<double>* centroid;
@@ -74,10 +75,11 @@ class KMeans : public Coheir
 {
 public:
     KMeans(int k);
+    ~KMeans();
     void initClusters();
     void initClustersForEachClass();
     void train();
-    double euclidianDistance(std::vector<double>* v, Data* data);
+    double euclidianDistance(std::vector<double>* centroid, Data* point);
     double validate();
     double test();
 

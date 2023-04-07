@@ -22,7 +22,9 @@ public:
     void readFeatureLabels(const std::string& path);
     void splitData();
     void countClasses();
-    
+
+    int getClassCounts();
+
     uint32_t convertToLittleEndian(const unsigned char* bytes);
 
     std::vector<Data*>* getTrainingData();

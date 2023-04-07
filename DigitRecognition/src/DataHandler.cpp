@@ -146,6 +146,11 @@ void DataHandler::countClasses()
     std::cout << "Successfully extracted " << num_classes << " unique classes." << std::endl;
 }
 
+int DataHandler::getClassCounts()
+{
+    return num_classes;
+}
+
 uint32_t DataHandler::convertToLittleEndian(const unsigned char* bytes)
 {
     if (bytes == nullptr)
