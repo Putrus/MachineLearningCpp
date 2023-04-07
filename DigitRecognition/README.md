@@ -6,3 +6,5 @@ The MNIST dataset is a collection of about 60000 handwritten digit images by 250
 
 # Usage
 Download datasets from http://yann.lecun.com/exdb/mnist/ and unzip in dataset folder
+
+If cmake can't find the gcc and g++, execute "cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ ..\" at the beginning
