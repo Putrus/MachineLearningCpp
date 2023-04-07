@@ -1,8 +1,9 @@
 #ifndef __KNN_H
 #define __KNN_H
 
-#include <vector>
 #include "../../include/Data.h"
+
+#include <vector>
 
 class KNN
 {
@@ -20,6 +21,8 @@ public:
     int predict();
 
     double calculateDistance(Data* query_point, Data* input);
+    double validatePerformance();
+    double testPerformance();
 
 private:
     int k;

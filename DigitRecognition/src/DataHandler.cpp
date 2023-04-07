@@ -177,7 +177,7 @@ void DataHandler::fillRandomly(std::unordered_set<int>& used_indexes, std::vecto
     data->reserve(size);
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 59999);
+    std::uniform_int_distribution<> dis(0, data_array->size() - 1);
 
     while(data->size() < size)
     {

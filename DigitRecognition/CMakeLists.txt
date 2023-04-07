@@ -13,7 +13,9 @@ add_library(libraries
             src/Data.cpp
             src/DataHandler.cpp)
 
-add_executable(main src/main.cpp)
+add_subdirectory(knn)
 
-target_include_directories(libraries PUBLIC include)
-target_link_libraries(main PUBLIC libraries)
+add_executable(main knn/src/main.cpp)
+
+target_include_directories(libraries PUBLIC include knn/include)
+target_link_libraries(main PUBLIC libraries library)
