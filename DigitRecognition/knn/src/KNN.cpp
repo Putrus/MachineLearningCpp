@@ -125,13 +125,19 @@ double KNN::validatePerformance()
     {
         findKNearest(query_point);
         int prediction = predict();
-        std::cout << prediction << " -> " << (int)query_point->getLabel() << std::endl;
         if(prediction == query_point->getLabel())
         {
             ++count;
         }
         ++data_index;
-        std::cout << "Current performance = " << count * 100.0 / data_index << std::endl;
+
+        if(prediction != query_point->getLabel())
+        {
+            query_point->display();
+            std::cout << prediction << " -> " << (int)query_point->getLabel() << std::endl;
+            std::cout << "Current performance = " << count * 100.0 / data_index << std::endl;
+        }
+        std::cout << data_index << "/" << validation_data->size() << " " << data_index * 100.0 / (double)validation_data->size() << "%" << std::endl;
     }
     current_performance = count * 100.0 / (double)validation_data->size();
     std::cout << "Validation performance for each k = " << k << " : " << current_performance << std::endl;

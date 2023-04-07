@@ -49,7 +49,7 @@ void DataHandler::readFeatureVector(const std::string& path)
         int image_size = header[2] * header[3];
         for(int i = 0; i < header[1]; ++i)
         { 
-            Data* data = new Data();
+            Data* data = new Data(header[2], header[3]);
             uint8_t element;
             for(int j = 0; j < image_size; ++j)
             {
