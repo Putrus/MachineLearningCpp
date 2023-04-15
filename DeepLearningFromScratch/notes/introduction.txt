@@ -1,0 +1,37 @@
+See services with AI courses -> Coursera and Udacity.
+
+Lots of machine learning explanation are like
+https://oreil.ly/r5YxS -> blind men and an elephant
+https://en.wikipedia.org/wiki/Blind_men_and_an_elephant
+
+Good book:
+title: Deep Learning Ian Goodfellow
+
+4 algorithms explanation:
+
+1. explanation in polish
+2. graphics ilustration how algorithm works
+3. mathematic explanation why algorithm works
+4. pseudocode with algorithm implementation
+
+What is neural network?
+- is mathematic function, which has input and output data
+- is calculation graph in which multidimensional arrays are transferred
+- consists of layers and every layer has a certain number of neurons
+- is universal approximator of a function that theoretically solves any supervised learning problem
+
+Summary of chapters:
+The first three chapters are the most important
+1. Mathematical function as a calculation graph. Calculation of derivative using the chain rule.
+2. Practical part. Training model using line regression and neural network to predict building prices.
+3. Basic deep learning model. Improve algorithms from part 2 by creating new high level components: Layer, Model, Optimizer.
+4. Sometimes to good prediction standard techniques aren't enough. Training tricks to improve probability of find good solution.
+5. Convolutional neural networks. Standard architecture to images recognition. Creating CNN layers from scratch.
+6. Recurrent neural network. Automatic differentiation. RNN are good for sequential data.
+7. Do the some things like in chapters 1-6 but using PyTorch library. 
+
+Book github repository:
+https://oreil.ly/deep-learning-github
+https://github.com/SethHWeidman/DLFS_code
+Code examples:
+ftp://ftp.helion.pl/przyklady/uczgle.zip

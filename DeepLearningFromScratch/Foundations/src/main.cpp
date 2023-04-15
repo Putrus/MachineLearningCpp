@@ -7,11 +7,13 @@
 #include <xtensor/xio.hpp>
 #include <xtensor/xview.hpp>
 
+
 int main()
 {
+   std::vector<double> arr{ 5.0, 6.0, 7.0 };
    xt::xarray<double> arr2{ 5.0, 6.0, 7.0 };
 
-   auto s = xt::eye<double>({ 3,  4 });
+   auto s = xt::ones<double>({ 4,  4 });
    arr2 *= 5;
    std::cout << arr2 << std::endl;
    std::cout << s << std::endl;
