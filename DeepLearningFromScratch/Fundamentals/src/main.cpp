@@ -61,6 +61,8 @@ void derivativeCheck();
 void nestedFunctions();
 
 void chainRule();
+
+void chainRuleTwoInputs();
 }
 
 xt::xarray<double> square(const xt::xarray<double>& x)
@@ -253,6 +255,27 @@ void fundamentals::chainRule()
    std::cout << "f2(f1(" << x1 << ")) appr. = " << f2(f1(x)) + dfdu * (x1 - x) << std::endl;
    std::cout << "f2(f1(" << x1 << ")) = " << f2(f1(x1)) << std::endl;
 }
+
+void fundamentals::chainRuleTwoInputs()
+{
+   double x = 2;
+   double y = 3;
+   auto fun = [](double x, double y)
+   {
+      return x + y;
+   };
+
+   //f1 -> square()
+   //f2 -> fun()
+   std::cout << "square(fun(" << x << ", " << y << ")) = " << square(fun(x, y)) << std::endl;
+   double a = fun(x, y);
+   double (*square_ptr)(double) = &square;
+   double dsda = deriv(square_ptr, a);
+
+   double dadx = deriv(fun, x);
+   double dady = deriv(fun, y);
+}
+
 int main()
 {
    //fundamentals::cmpToStdVec();
@@ -266,5 +289,7 @@ int main()
    fundamentals::nestedFunctions();
    std::cout << "------------------------------" << std::endl;
    fundamentals::chainRule();
+   std::cout << "------------------------------" << std::endl;
+   fundamentals::chainRuleTwoInputs();
    return 0;
 }
