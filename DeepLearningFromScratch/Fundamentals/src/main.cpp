@@ -262,7 +262,7 @@ void fundamentals::chainRuleTwoInputs()
    double y = 3;
    auto fun = [](double x, double y)
    {
-      return x + y;
+      return x * y;
    };
 
    //f1 -> square()
@@ -272,8 +272,8 @@ void fundamentals::chainRuleTwoInputs()
    double (*square_ptr)(double) = &square;
    double dsda = deriv(square_ptr, a);
 
-   double dadx = deriv(fun, x);
-   double dady = deriv(fun, y);
+   double dadx = y;
+   double dady = x;
 }
 
 int main()
